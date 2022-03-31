@@ -14,7 +14,7 @@ editor.setValue("print('Hello world')");
 output.value = "Initializing...\n";
 
 function addToOutput(stdout) {
-  output.value += ">>> " + editor.getValue() + "\n" + stdout + "\n";
+  output.value += ">>> " + "\n" + stdout + "\n";
 }
 
 function clearHistory() {
