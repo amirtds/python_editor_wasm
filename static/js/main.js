@@ -1,4 +1,6 @@
+// find the output element
 const output = document.getElementById("output");
+// initializing the codemirror and pass configuration to support python and dracula theme
 const editor = CodeMirror.fromTextArea(document.getElementById("code"), {
               mode: {
                   name: "python",
@@ -10,18 +12,21 @@ const editor = CodeMirror.fromTextArea(document.getElementById("code"), {
               indentUnit: 4,
               matchBrackets: true,
             });
+// set the initial value of the editor
 editor.setValue("print('Hello world')");
 output.value = "Initializing...\n";
 
+// Add pyodide returned value to the output
 function addToOutput(stdout) {
   output.value += ">>> " + "\n" + stdout + "\n";
 }
 
+// Clean the output section
 function clearHistory() {
   output.value = "";
 }
 
-// init Pyodide
+// init Pyodide and show sys.version when it's loaded successfully
 async function main() {
   let pyodide = await loadPyodide({
     indexURL: "https://cdn.jsdelivr.net/pyodide/v0.19.1/full/",
@@ -32,9 +37,11 @@ async function main() {
   `);
   output.value += "\n" + "Python Ready !" + "\n";
   return pyodide;
-} 
+}
+// run the main funciton
 let pyodideReadyPromise = main();
 
+// pass the editor value to the pyodide.runPython function and show the result in the output section
 async function evaluatePython() {
   let pyodide = await pyodideReadyPromise;
   try {
